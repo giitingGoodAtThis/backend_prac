@@ -1,18 +1,32 @@
-from django.shortcuts import render
-
-# Create your views here.
-
-from django.contrib.auth import authenticate, login
+from django.shortcuts import render, redirect
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from django.views.decorators.http import require_http_methods
 from django.views.decorators.csrf import csrf_exempt
 import json
 
-# this renders your HTML page
+# Home page with login/signup popup
 def myweb(request):
-    return render(request, 'accounts/myweb.html')  # login.html should be inside accounts/templates/
+    return render(request, 'accounts/myweb.html')
 
+
+# Dashboard page (requires login)
+@login_required(login_url='/')
+def dashboard(request):
+    return render(request, 'accounts/dashboard.html', {'user': request.user})
+
+
+# Logout API
+@csrf_exempt
+@require_http_methods(["POST"])
+def logout_view(request):
+    logout(request)
+    return JsonResponse({'status': 'success', 'message': 'Logged out'})
+
+
+# Login API
 @csrf_exempt
 @require_http_methods(["POST"])
 def login_view(request):
@@ -29,6 +43,8 @@ def login_view(request):
     except Exception as e:
         return JsonResponse({'status': 'error', 'message': str(e)})
 
+
+# Signup API
 @csrf_exempt
 @require_http_methods(["POST"])
 def signup_view(request):

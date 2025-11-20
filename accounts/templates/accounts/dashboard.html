@@ -5,24 +5,101 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Dashboard</title>
 <style>
-body { font-family: Arial, sans-serif; background-color: #f0f0f0; text-align:center; padding:50px; }
-button { padding:10px 20px; font-size:16px; cursor:pointer; }
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    background: linear-gradient(135deg, #0bb6ef, #13cee7);
+    min-height: 100vh;
+    color: #fff;
+}
+header {
+    background: rgba(0,0,0,0.2);
+    padding: 20px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+header h1 {
+    margin: 0;
+    font-size: 2em;
+}
+.logout-btn {
+    background-color: #f44336;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 25px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+.logout-btn:hover {
+    background-color: #d32f2f;
+    transform: translateY(-2px);
+}
+
+.container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin: 40px auto;
+    max-width: 1200px;
+    gap: 20px;
+}
+
+.card {
+    background: rgba(255,255,255,0.1);
+    backdrop-filter: blur(8px);
+    border-radius: 15px;
+    padding: 30px 20px;
+    width: 280px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px rgba(0,0,0,0.3);
+}
+
+.card h2 {
+    margin-top: 0;
+    font-size: 1.5em;
+    margin-bottom: 10px;
+}
+.card p {
+    font-size: 1em;
+    margin: 5px 0;
+}
 </style>
 </head>
 <body>
-<h1>Welcome, {{ user.username }}!</h1>
-<p>This is your dashboard.</p>
-<button id="logoutBtn">Logout</button>
 
-<script>
-document.getElementById('logoutBtn').addEventListener('click', async () => {
-    try {
-        const res = await fetch('/logout/', { method: 'POST', headers:{'X-CSRFToken': '{{ csrf_token }}'} });
-        if(res.ok) window.location.href = '/';
-    } catch(err){
-        alert('Error logging out');
-    }
-});
-</script>
+<header>
+    <h1>Welcome, {{ user.username }}</h1>
+    <form method="post" action="{% url 'logout' %}">
+        {% csrf_token %}
+        <button class="logout-btn">Logout</button>
+    </form>
+</header>
+
+<div class="container">
+    <div class="card">
+        <h2>Profile</h2>
+        <p>Username: {{ user.username }}</p>
+        <p>Email: {{ user.email }}</p>
+    </div>
+    <div class="card">
+        <h2>Stats</h2>
+        <p>Projects Completed: 5</p>
+        <p>Tasks Pending: 2</p>
+    </div>
+    <div class="card">
+        <h2>Settings</h2>
+        <p><button style="padding:10px 15px; border:none; border-radius:10px; cursor:pointer; background:#0bb6ef; color:white;">Edit Profile</button></p>
+    </div>
+</div>
+
 </body>
 </html>

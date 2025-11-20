@@ -1,258 +1,530 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BENZON - Profile</title>
-
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BENZON - Profile</title>
 <style>
+/* BODY */
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     margin: 0;
-    overflow: auto;
-    background-size: cover;
-    background-color: gray;
-}
-
-/* MAIN */
-.tunga {
+    background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-}  /* ← FIXED */
-
-#bot {
-    background-color: rgb(11, 182, 239);
-    margin-top: 100px;
-    margin-bottom: 5px;
-    font-weight: bold;
-    font-size: 125px;
-    border: none;
-    cursor: pointer;
-    font-style: italic;
-    color: white;
-}
-
-.color {
-    color: white;
-    font-size: larger;
-    font-weight: bold;
-}
-
-.pp {
-    background-color: rgb(11, 182, 239);
-    border-radius: 10px;
-    color: white;
-}
-
-.LOGIN {
-    background-color: gray;
-    color: #b3ecf1;
-    font-weight: bold;
-    font-size: 30px;
-    margin-left: 10px;
-    border: none;
-    border-radius: 30px;
-    cursor: pointer;
-}
-
-/* POPUP */
-.popup-overlay {
-  display: none;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.5);
-  z-index: 1000;
-}
-
-.popup-content {
-  position: relative;
-  background: white;
-  width: 300px;
-  margin: 100px auto;
-  padding: 30px;
-  border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-.close-btn {
-  position: absolute;
-  top: 10px;
-  right: 15px;
-  font-size: 28px;
-  cursor: pointer;
-  color: #666;
+    min-height: 100vh;
+    color: #fff;
 }
 
 /* NAVBAR */
 .hayst {
-    margin-left: 150px;
-    margin-right: 150px;
-    margin-top: 50px;
-    padding: 1.5px;
-    background-color: #13cee784;
-    text-align: center;
-} /* ← FIXED */
-
+    display: flex;
+    justify-content: center;
+    margin: 50px 0;
+}
 .buttonLink {
-    background-color: gray;
-    color: #b3ecf1;
+    background: linear-gradient(135deg, #0bb6ef, #0897c2);
+    color: white;
     font-weight: bold;
-    font-size: 30px;
-    margin-left: 10px;
+    font-size: 24px;
+    margin: 0 12px;
+    padding: 10px 25px;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.buttonLink:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+}
+
+/* MAIN CONTENT */
+.tunga {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 30px;
+}
+#bot {
+    background: linear-gradient(135deg, #0bb6ef, #0897c2);
+    font-weight: bold;
+    font-size: 120px;
+    border: none;
+    cursor: pointer;
+    font-style: italic;
+    color: white;
+    margin-bottom: 20px;
+    border-radius: 30px;
+    padding: 20px 50px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    transition: transform 0.2s ease;
+}
+#bot:hover {
+    transform: scale(1.05);
+}
+.color {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+/* LOGIN BUTTON */
+.LOGIN {
+    background: #ffffff33; /* semi-transparent */
+    color: white;
+    font-weight: bold;
+    font-size: 24px;
     border: none;
     border-radius: 30px;
+    padding: 10px 25px;
     cursor: pointer;
+    transition: background 0.3s ease, transform 0.2s ease;
+}
+.LOGIN:hover {
+    background: #0bb6ef;
+    transform: translateY(-2px);
+}
+
+/* POPUP MODAL */
+.popup-overlay {
+    position: fixed;
+    top:0; left:0;
+    width:100%; height:100%;
+    background: rgba(0,0,0,0.5);
+    backdrop-filter: blur(5px);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.popup-overlay.show {
+    display: flex;
+    animation: fadeIn 0.3s ease forwards;
+}
+
+@keyframes fadeIn {
+    from {opacity:0}
+    to {opacity:1}
+}
+
+.popup-content {
+    background: rgba(255,255,255,0.1);
+    backdrop-filter: blur(15px);
+    padding: 40px 30px;
+    border-radius: 20px;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.4);
+    width: 360px;
+    max-width: 90%;
+    transform: scale(0.8) translateY(-50px);
+    opacity:0;
+    transition: all 0.3s ease;
+}
+.popup-overlay.show .popup-content {
+    transform: scale(1) translateY(0);
+    opacity:1;
+}
+
+.close-btn {
+    position:absolute;
+    top:10px; right:15px;
+    font-size:28px;
+    cursor:pointer;
+    color:#fff;
+    transition: color 0.2s ease;
+}
+.close-btn:hover { color: #f44336; }
+
+input[type="text"], input[type="password"], input[type="email"] {
+    width: 100%;
+    padding: 12px 15px;
+    margin: 8px 0;
+    border-radius: 10px;
+    border: none;
+    outline: none;
+    background: rgba(255,255,255,0.25);
+    color: white;
+    font-size: 16px;
+    transition: background 0.2s ease, box-shadow 0.2s ease;
+}
+input:focus {
+    background: rgba(255,255,255,0.35);
+    box-shadow: 0 0 8px rgba(11,182,239,0.5);
+    color: #fff;
+}
+
+button[type="submit"] {
+    width: 100%;
+    padding: 12px;
+    margin-top: 12px;
+    border: none;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #0bb6ef, #0897c2);
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+button[type="submit"]:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+}
+
+.error {
+    color:#ff6b6b; font-size:0.9em; margin-top:2px;
+}
+.description-box {
+    background: rgba(255,255,255,0.1);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    padding: 20px 25px;
+    margin-top: 15px;
+    max-width: 650px;
+    line-height: 1.6;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.3s ease;
+    text-align: center;
+}
+.description-box:hover {
+    transform: scale(1.02);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+}
+.services-box {
+    display: none; /* hidden by default */
+    background: rgba(255,255,255,0.1);
+    backdrop-filter: blur(15px);
+    border-radius: 25px;
+    padding: 30px 25px;
+    margin-top: 40px;
+    max-width: 700px;
+    color: #fff;
+    text-align: center;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.services-box:hover {
+    transform: scale(1.01);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+}
+.service-list {
+    list-style:none;
+    padding:0;
+    margin-top:20px;
+}
+.service-item {
+    font-size: 20px;
+    margin: 12px 0;
+    padding: 10px 0;
+    cursor: pointer;
+    transition: transform 0.2s, color 0.2s;
+    border-radius: 15px;
+}
+.service-item:hover {
+    color: #0bb6ef;
+    transform: translateX(5px);
+}
+.service-desc-box {
+    margin-top: 20px;
+    padding: 15px 20px;
+    background: rgba(11,182,239,0.1);
+    border-radius: 15px;
+    min-height: 60px;
+    font-size: 16px;
+    line-height: 1.5;
+    transition: all 0.3s ease;
+}
+.description-container {
+    margin-top: 20px;
+    max-width: 650px;
+    text-align: center;
+}
+
+#toggleDescriptionBtn {
+    background: linear-gradient(135deg, #0bb6ef, #0897c2);
+    color: white;
+    border: none;
+    padding: 10px 25px;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 20px;
+    cursor: pointer;
+    margin-bottom: 15px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+#toggleDescriptionBtn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+}
+
+#descriptionContent {
+    background: rgba(255,255,255,0.1);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    padding: 20px 25px;
+    color: #fff;
+    line-height: 1.6;
+    display: none; /* hidden by default */
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: all 0.3s ease;
+}
+#descriptionContent.show {
+    display: block;
+    opacity: 1;
+    transform: translateY(0);
+}
+#descriptionContent p {
+    margin: 12px 0;
+    font-size: 17px;
+}
+.about-desc-box {
+    background: rgba(255,255,255,0.1);
+    backdrop-filter: blur(15px);
+    border-radius: 20px;
+    padding: 25px 30px;
+    margin-top: 20px;
+    text-align: left;
+    line-height: 1.6;
+    transition: all 0.3s ease;
+}
+.about-desc-box p, .about-desc-box h3 {
+    margin: 8px 0;
 }
 </style>
 </head>
 <body>
 
 <section class="hayst">
-<h3>
-    <a href=""><button class="buttonLink">About</button></a>
-    <a href=""><button class="buttonLink">Services</button></a>
-    <a href=""><button class="buttonLink">Contacts</button></a>
-</h3>
+    <button class="buttonLink">About</button>
+    <button class="buttonLink">Services</button>
+    <button class="buttonLink">Contacts</button>
 </section>
-
+<div id="aboutSection" class="services-box" style="display:none;">
+    <h2>About Me</h2>
+    <div class="about-desc-box">
+        <p><strong>Name:</strong> Nick Benzon Y. Retome</p>
+        <p><strong>Born:</strong> December 16, 2006</p>
+        <p><strong>Age:</strong> 16 years old</p>
+        <p><strong>Place of Birth:</strong> Mandaue City, Cebu</p>
+        <br>
+        <h3>Skills</h3>
+        <p>Web Design</p>
+        <p>HTML</p>
+        <p>CSS</p>
+        <p>Types 85-90 wpm</p>
+        <p>Problem Solving</p>
+    </div>
+</div>
+<div id="servicesSection" class="services-box">
+    <h2>Our Services</h2>
+    <ul class="service-list">
+        <li class="service-item" data-desc="We keep your websites running smoothly with regular updates and troubleshooting.">Website Maintenance</li>
+        <li class="service-item" data-desc="Protect your digital assets from hackers with our top-notch cybersecurity solutions.">Cyber Security Solutions</li>
+        <li class="service-item" data-desc="Deliver websites that adapt perfectly to any screen size, from desktop to mobile.">Deliver Responsive Websites</li>
+        <li class="service-item" data-desc="Create powerful web applications that streamline your business operations.">Deliver Web Apps</li>
+        <li class="service-item" data-desc="Build mobile apps with user-friendly interfaces and seamless performance.">Mobile App Development</li>
+        <li class="service-item" data-desc="Develop secure, efficient backends to support your digital platforms.">Backend Development</li>
+    </ul>
+    <div id="serviceDescription" class="service-desc-box"></div>
+</div>
+<!-- CONTACTS SECTION -->
+<div id="contactSection" class="services-box" style="display: none;">
+    <h2>Contact Me</h2>
+    <div class="contact-info" style="margin-top: 20px; line-height: 1.6; text-align: left;">
+        <p><strong>Phone Number:</strong> <span>09705363519</span></p>
+        <p><strong>Facebook:</strong> <a href="https://www.facebook.com/benz.retome/" target="_blank" style="color:#0bb6ef; text-decoration: none;">My Profile</a></p>
+        <p><strong>Email:</strong> <a href="https://mail.google.com/mail/u/0/?hl=en&tf=cm&fs=1&to=retomenickbenz@gmail.com" style="color:#0bb6ef; text-decoration: none;">retomenickbenz@gmail.com</a></p>
+    </div>
+</div>
 <div class="tunga">
-
-<button id="bot">Benz Retome</button>
-<p class="color"><u>Web Developer</u></p>
-
-<button id="openLogin" class="LOGIN">Login</button>
-
-<!-- POPUP -->
-<div id="loginPopup" class="popup-overlay">
-  <div class="popup-content">
-    <span class="close-btn">&times;</span>
-
-    <!-- Login Form -->
-    <div id="loginForm-container">
-      <h3>Login</h3>
-      <form id="loginForm">
-        <input type="text" id="username" placeholder="Username" required>
-        <input type="password" id="password" placeholder="Password" required>
-        <button type="submit">Login</button>
-      </form>
-      <p>Don't have an account? <a href="#" id="switchToSignup">Sign Up</a></p>
-    </div>
-
-    <!-- Signup Form -->
-    <div id="signupForm-container" style="display:none;">
-      <h3>Sign Up</h3>
-      <form id="signupForm">
-        <input type="text" id="signup-username" placeholder="Username" required>
-        <input type="email" id="signup-email" placeholder="Email" required>
-        <input type="password" id="signup-password" placeholder="Password" required>
-        <input type="password" id="signup-confirm-password" placeholder="Confirm Password" required>
-        <button type="submit">Sign Up</button>
-      </form>
-      <p>Already have an account? <a href="#" id="switchToLogin">Login</a></p>
-    </div>
-
+    <button id="bot">Benz Retome</button>
+    <p class="color"><u>Web Developer</u></p>
+<div class="description-container">
+  <button id="toggleDescriptionBtn">Show/Hide Description</button>
+  <div id="descriptionContent">
+    <p>Hi, I am <strong>Nick Benzon Y. Retome</strong>, a Full-stack web developer specializing in building secure, responsive digital solutions for modern businesses.</p>
+    <p>I create custom websites, web applications, and mobile apps with robust back-end architecture.</p>
+    <p>I also provide ongoing maintenance and cybersecurity implementation to keep your digital presence protected and performing at its best.</p>
   </div>
 </div>
+    <button id="openLogin" class="LOGIN">Login</button>
 
-</div> <!-- END MAIN -->
+    <div id="loginPopup" class="popup-overlay">
+        <div class="popup-content">
+            <span class="close-btn">&times;</span>
+
+            <div id="loginForm-container">
+                <h3>Login</h3>
+                <form id="loginForm">
+                    <input type="text" id="username" placeholder="Username" required>
+                    <p class="error" id="usernameError"></p>
+                    <input type="password" id="password" placeholder="Password" required>
+                    <p class="error" id="passwordError"></p>
+                    <button type="submit">Login</button>
+                </form>
+                <p>Don't have an account? <a href="#" id="switchToSignup">Sign Up</a></p>
+            </div>
+
+            <div id="signupForm-container" style="display:none;">
+                <h3>Sign Up</h3>
+                <form id="signupForm">
+                    <input type="text" id="signup-username" placeholder="Username" required>
+                    <p class="error" id="signupUsernameError"></p>
+                    <input type="email" id="signup-email" placeholder="Email" required>
+                    <p class="error" id="signupEmailError"></p>
+                    <input type="password" id="signup-password" placeholder="Password" required>
+                    <p class="error" id="signupPasswordError"></p>
+                    <input type="password" id="signup-confirm-password" placeholder="Confirm Password" required>
+                    <p class="error" id="signupConfirmPasswordError"></p>
+                    <button type="submit">Sign Up</button>
+                </form>
+                <p>Already have an account? <a href="#" id="switchToLogin">Login</a></p>
+            </div>
+        </div>
+    </div>
+</div>
 
 <script>
-// ELEMENTS
 const popup = document.getElementById('loginPopup');
 const openBtn = document.getElementById('openLogin');
 const closeBtn = document.querySelector('.close-btn');
-
 const loginForm = document.getElementById('loginForm');
 const signupForm = document.getElementById('signupForm');
-
 const switchToSignup = document.getElementById('switchToSignup');
 const switchToLogin = document.getElementById('switchToLogin');
-
 const loginFormContainer = document.getElementById('loginForm-container');
 const signupFormContainer = document.getElementById('signupForm-container');
 
-// OPEN POPUP
-openBtn.addEventListener('click', () => popup.style.display = 'block');
+openBtn.addEventListener('click', () => popup.classList.add('show'));
+closeBtn.addEventListener('click', () => popup.classList.remove('show'));
+popup.addEventListener('click', e => { if(e.target===popup) popup.classList.remove('show'); });
 
-// CLOSE POPUP
-closeBtn.addEventListener('click', () => popup.style.display = 'none');
-
-// CLOSE BY CLICKING OUTSIDE
-popup.addEventListener('click', e => {
-  if (e.target === popup) popup.style.display = 'none';
-});
-
-// SWITCH FORMS
 switchToSignup.addEventListener('click', e => {
-  e.preventDefault();
-  loginFormContainer.style.display='none';
-  signupFormContainer.style.display='block';
+    e.preventDefault();
+    loginFormContainer.style.display='none';
+    signupFormContainer.style.display='block';
 });
-
 switchToLogin.addEventListener('click', e => {
-  e.preventDefault();
-  signupFormContainer.style.display='none';
-  loginFormContainer.style.display='block';
+    e.preventDefault();
+    signupFormContainer.style.display='none';
+    loginFormContainer.style.display='block';
 });
 
-// POST helper
-async function postJSON(url, data) {
-  const res = await fetch(url, {
-    method:'POST',
-    headers:{'Content-Type':'application/json'},
-    body: JSON.stringify(data)
-  });
-  return res.json();
+async function postJSON(url, data){
+    const res = await fetch(url, {
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body: JSON.stringify(data)
+    });
+    return res.json();
 }
 
-// LOGIN
 loginForm.addEventListener('submit', async e => {
-  e.preventDefault();
-  const username = document.getElementById('username').value;
-  const password = document.getElementById('password').value;
-
-  try {
-    const data = await postJSON('login/', {username,password});
-    alert(data.message);
-
-    if(data.status === 'success') {
-        popup.style.display='none';
-        window.location.href = "/accounts/dashboard/";  // REDIRECT
+    e.preventDefault();
+    const username = document.getElementById('username').value;
+    const password = document.getElementById('password').value;
+    document.getElementById('usernameError').textContent='';
+    document.getElementById('passwordError').textContent='';
+     // ✅ Password length check
+    if(password.length < 8){
+        document.getElementById('passwordError').textContent = "Password must be at least 8 characters.";
+        return; // stop submission
     }
-  } catch(err){
-    alert("Backend error: " + err);
-  }
+    const data = await postJSON('/login/', {username,password});
+    if(data.status==='success') window.location.href='/dashboard/';
+    else document.getElementById('passwordError').textContent=data.message;
 });
 
-// SIGNUP
 signupForm.addEventListener('submit', async e => {
-  e.preventDefault();
-  const username = document.getElementById('signup-username').value;
-  const email = document.getElementById('signup-email').value;
-  const password = document.getElementById('signup-password').value;
-  const confirm_password = document.getElementById('signup-confirm-password').value;
+    e.preventDefault();
+    const username = document.getElementById('signup-username').value;
+    const email = document.getElementById('signup-email').value;
+    const password = document.getElementById('signup-password').value;
+    const confirm_password = document.getElementById('signup-confirm-password').value;
 
-  try {
-    const data = await postJSON('/signup/', {
-      username,email,password,confirm_password
-    });
-
-    alert(data.message);
-
-    if(data.status === 'success') {
-        popup.style.display='none';
-        window.location.href = "/accounts/dashboard/";  // REDIRECT
+    document.getElementById('signupUsernameError').textContent = '';
+    document.getElementById('signupEmailError').textContent = '';
+    document.getElementById('signupPasswordError').textContent = '';
+    document.getElementById('signupConfirmPasswordError').textContent = '';
+    // ✅ Password length check
+    if (password.length < 8) {
+        document.getElementById('signupPasswordError').textContent = "Password must be at least 8 characters.";
+        return; // stop submission
     }
-  } catch(err){
-    alert("Backend error: " + err);
-  }
+    const data = await postJSON('/signup/', {username, email, password, confirm_password});
+    if (data.status === 'success') window.location.href = '/dashboard/';
+    else if (data.message.includes('Username')) document.getElementById('signupUsernameError').textContent = data.message;
+    else if (data.message.includes('Email')) document.getElementById('signupEmailError').textContent = data.message;
+    else if (data.message.includes('Passwords')) document.getElementById('signupConfirmPasswordError').textContent = data.message;
+    else document.getElementById('signupPasswordError').textContent = data.message;
+});
+
+// Toggle services section when Services button clicked
+const servicesBtn = document.querySelector('.buttonLink:nth-child(2)');
+const servicesSection = document.getElementById('servicesSection');
+
+servicesBtn.addEventListener('click', () => {
+    if(servicesSection.style.display === 'none' || servicesSection.style.display === '') {
+        servicesSection.style.display = 'block';
+        servicesSection.scrollIntoView({behavior:'smooth'});
+    } else {
+        servicesSection.style.display = 'none';
+    }
+});
+
+// Show description when a service is clicked
+const serviceItems = document.querySelectorAll('.service-item');
+const serviceDesc = document.getElementById('serviceDescription');
+
+serviceItems.forEach(item => {
+    item.addEventListener('click', () => {
+        serviceDesc.textContent = item.dataset.desc;
+    });
+});
+const toggleBtn = document.getElementById('toggleDescriptionBtn');
+const descriptionContent = document.getElementById('descriptionContent');
+
+toggleBtn.addEventListener('click', () => {
+    if(descriptionContent.style.display === 'none' || descriptionContent.style.display === '') {
+        descriptionContent.style.display = 'block';
+    } else {
+        descriptionContent.style.display = 'none';
+    }
+});
+toggleBtn.addEventListener('click', () => {
+    descriptionContent.classList.toggle('show');
+    toggleBtn.textContent = descriptionContent.classList.contains('show') ? 'Hide Description' : 'Show Description';
+});
+const aboutBtn = document.querySelector('.buttonLink:nth-child(1)');
+const aboutSection = document.getElementById('aboutSection');
+
+aboutBtn.addEventListener('click', () => {
+    if(aboutSection.style.display === 'none' || aboutSection.style.display === '') {
+        aboutSection.style.display = 'block';
+        aboutSection.scrollIntoView({behavior:'smooth'});
+    } else {
+        aboutSection.style.display = 'none';
+    }
+});
+// Toggle Contacts section when Contacts button clicked
+const contactsBtn = document.querySelector('.buttonLink:nth-child(3)'); // third button
+const contactSection = document.getElementById('contactSection');
+
+contactsBtn.addEventListener('click', () => {
+    // hide other sections
+    descriptionContent.style.display = 'none';
+    servicesSection.style.display = 'none';
+
+    // toggle Contacts section
+    if(contactSection.style.display === 'none' || contactSection.style.display === '') {
+        contactSection.style.display = 'block';
+        contactSection.scrollIntoView({behavior:'smooth'});
+    } else {
+        contactSection.style.display = 'none';
+    }
 });
 </script>
-
 </body>
 </html>
