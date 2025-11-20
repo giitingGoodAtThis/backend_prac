@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Dashboard</title>
+
 <style>
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -12,6 +13,8 @@ body {
     min-height: 100vh;
     color: #fff;
 }
+
+/* HEADER */
 header {
     background: rgba(0,0,0,0.2);
     padding: 20px 40px;
@@ -39,6 +42,7 @@ header h1 {
     transform: translateY(-2px);
 }
 
+/* CARDS */
 .container {
     display: flex;
     flex-wrap: wrap;
@@ -57,6 +61,7 @@ header h1 {
     box-shadow: 0 10px 20px rgba(0,0,0,0.2);
     text-align: center;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
 }
 .card:hover {
     transform: translateY(-5px);
@@ -68,9 +73,24 @@ header h1 {
     font-size: 1.5em;
     margin-bottom: 10px;
 }
-.card p {
-    font-size: 1em;
-    margin: 5px 0;
+
+/* INFO BOX */
+#infoBox {
+    width: 80%;
+    margin: 30px auto 0;
+    padding: 25px 30px;
+    background: rgba(255,255,255,0.15);
+    backdrop-filter: blur(10px);
+    border-radius: 15px;
+    box-shadow: 0 12px 25px rgba(0,0,0,0.2);
+    display: none;
+    animation: fadeIn 0.3s ease;
+    line-height: 1.6;
+}
+
+@keyframes fadeIn {
+    from {opacity: 0; transform: translateY(8px);}
+    to {opacity: 1; transform: translateY(0);}
 }
 </style>
 </head>
@@ -78,6 +98,8 @@ header h1 {
 
 <header>
     <h1>Welcome, {{ user.username }}</h1>
+
+    <!-- LOGOUT BUTTON -->
     <form method="post" action="{% url 'logout' %}">
         {% csrf_token %}
         <button class="logout-btn">Logout</button>
@@ -85,21 +107,74 @@ header h1 {
 </header>
 
 <div class="container">
-    <div class="card">
+
+    <div class="card" onclick="showInfo('profile')">
         <h2>Profile</h2>
-        <p>Username: {{ user.username }}</p>
-        <p>Email: {{ user.email }}</p>
+        <p>Your account information</p>
     </div>
-    <div class="card">
+
+    <div class="card" onclick="showInfo('stats')">
         <h2>Stats</h2>
-        <p>Projects Completed: 5</p>
-        <p>Tasks Pending: 2</p>
+        <p>Your activity summary</p>
     </div>
-    <div class="card">
+
+    <div class="card" onclick="showInfo('settings')">
         <h2>Settings</h2>
-        <p><button style="padding:10px 15px; border:none; border-radius:10px; cursor:pointer; background:#0bb6ef; color:white;">Edit Profile</button></p>
+        <p>Manage your preferences</p>
     </div>
+
 </div>
+
+<!-- DYNAMIC INFO BOX -->
+<div id="infoBox"></div>
+
+<script>
+function showInfo(type) {
+    const box = document.getElementById("infoBox");
+
+    if (box.style.display === "block" && box.dataset.current === type) {
+        box.style.display = "none";
+        return;
+    }
+
+    if (type === "profile") {
+        box.innerHTML = `
+            <h2>Profile Information</h2>
+            <p><strong>Username:</strong> {{ user.username }}</p>
+            <p><strong>Email:</strong> {{ user.email }}</p>
+            <p>You can update your profile settings soon.</p>
+        `;
+    }
+    else if (type === "stats") {
+        box.innerHTML = `
+            <h2>Your Stats</h2>
+            <p><strong>Projects Completed:</strong> 5</p>
+            <p><strong>Tasks Pending:</strong> 2</p>
+            <p>Your productivity is above average. Keep going!</p>
+        `;
+    }
+    else if (type === "settings") {
+        box.innerHTML = `
+            <h2>Settings</h2>
+            <p>Manage your preferences and account configurations.</p>
+            <button style="
+                padding:10px 20px;
+                background:#0bb6ef;
+                border:none;
+                border-radius:10px;
+                cursor:pointer;
+                color:white;
+                font-weight:bold;
+            ">
+                Edit Profile (coming soon)
+            </button>
+        `;
+    }
+
+    box.dataset.current = type;
+    box.style.display = "block";
+}
+</script>
 
 </body>
 </html>

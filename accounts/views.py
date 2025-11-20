@@ -19,12 +19,15 @@ def dashboard(request):
 
 
 # Logout API
-@csrf_exempt
-@require_http_methods(["POST"])
+# @csrf_exempt
+# @require_http_methods(["POST"])
+# def logout_view(request):
+#     logout(request)
+#     return JsonResponse({'status': 'success', 'message': 'Logged out'})
+# Logout
 def logout_view(request):
     logout(request)
-    return JsonResponse({'status': 'success', 'message': 'Logged out'})
-
+    return redirect('myweb')  # redirect back to homepage
 
 # Login API
 @csrf_exempt
